@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scrolling_tabs/constants.dart';
+import '../utilities/constants.dart';
 
 class CustomSubjectCard extends StatelessWidget {
 
