@@ -1,9 +1,23 @@
 import 'dart:convert';
 import 'package:classes_and_groups_app/utilities/constants.dart';
+import 'package:classes_and_groups_app/utilities/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../resources/custom_subject_card.dart';
 import '../resources/custom_teacher_card.dart';
+
+
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp( //use MaterialApp() widget like this
+        home: HomeScreen() //create new widget class for this 'home' to
+      // escape 'No MediaQuery widget found' error
+    );
+  }
+}
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -38,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MaterialApp(
       home: Scaffold(
         // be aware of notches
@@ -49,25 +64,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 flex: 1,
                 child: Container(
                   width: double.infinity,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       color: kPrimaryColor,
                       borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(SizeConfig.safeBlockHorizontal * 5),
+                        bottomLeft: Radius.circular(SizeConfig.safeBlockHorizontal * 5),
                       )
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       SizedBox(
-                        height: 70,
+                        height: SizeConfig.safeBlockVertical * 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 25),
+                        padding: EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 10),
                         child: Text(
                           "Classes and Groups",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: SizeConfig.safeBlockHorizontal * 5,
                             color: kSecondaryColor,
                             fontWeight: FontWeight.bold
                           ),
@@ -81,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 4,
                 child: Container(
+                  padding: EdgeInsets.only(left: SizeConfig.safeBlockVertical * 2, top: SizeConfig.safeBlockVertical * 3),
                   color: kBodyColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,16 +122,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           },
                         ),
-                        height: 80,
+                        height: SizeConfig.safeBlockVertical * 6,
                       )
                       : Container(),
 
-                      const Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 10, top: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 5, bottom: SizeConfig.safeBlockVertical * 1, top: SizeConfig.safeBlockVertical * 5),
                         child: Text(
-                          "List Of Courses",
+                          "List of courses",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.4,
                           ),
                         ),
                       ),

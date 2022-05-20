@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
+import '../utilities/size_config.dart';
 
 class CustomSubjectCard extends StatelessWidget {
 
@@ -10,18 +11,20 @@ class CustomSubjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      width: 200,
+      margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 2),
+      width: SizeConfig.safeBlockHorizontal * 24,
+      height: SizeConfig.safeBlockVertical * 12,
       decoration: BoxDecoration(
         color: active ? kPrimaryColor : kSecondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(50)),
+        borderRadius: BorderRadius.all(Radius.circular(SizeConfig.safeBlockHorizontal * 5)),
       ),
       child: Center(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 25,
+              fontSize: SizeConfig.safeBlockHorizontal * 4,
               color: active ? Colors.white : Colors.black,
             ),
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
+import '../utilities/size_config.dart';
 
 class CustomTeacherCard extends StatelessWidget {
 
@@ -10,18 +11,18 @@ class CustomTeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      width: 200,
+      margin: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 1.5),
       color: kSecondaryColor,
       child: Row(
           children:[
-            const Padding(
-              padding: EdgeInsets.all(15),
+            Padding(
+              padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 5),
               child: Image(
                 image: AssetImage("images/teacher.png"),
-                width: 40,
-                height: 40,
+                width: SizeConfig.safeBlockHorizontal * 8,
+                height: SizeConfig.safeBlockVertical * 8,
               ),
             ),
             Column(
@@ -30,13 +31,13 @@ class CustomTeacherCard extends StatelessWidget {
               children: [
                 Text(
                   teacherName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 2,
                 ),
                 Text(
                   startingDate,
