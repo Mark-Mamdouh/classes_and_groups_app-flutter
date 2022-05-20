@@ -14,14 +14,14 @@ class CustomSubjectCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       width: 200,
       decoration: BoxDecoration(
-        color: active ? primary_color : secondary_color,
+        color: active ? kPrimaryColor : kSecondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(50)),
       ),
       child: Center(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 25,
               color: active ? Colors.white : Colors.black,
             ),
           )

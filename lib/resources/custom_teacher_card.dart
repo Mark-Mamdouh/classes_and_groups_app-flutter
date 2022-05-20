@@ -13,7 +13,7 @@ class CustomTeacherCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       width: 200,
-      color: secondary_color,
+      color: kSecondaryColor,
       child: Row(
           children:[
             const Padding(

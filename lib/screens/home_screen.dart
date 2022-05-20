@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:classes_and_groups_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import '../resources/custom_subject_card.dart';
 import '../resources/custom_teacher_card.dart';
 
@@ -13,24 +14,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  List _items = [];
+  List _teachers = [];
+  int clickedItem = 0;
 
+  // Fetch content from the json file
+  Future<void> readJson() async {
+    final String response = await rootBundle.loadString('data.json');
+    // print(response);
+    final data = await json.decode(response);
+    setState(() {
+      _items = data["subjects"];
+      _teachers = _items[clickedItem]['courses'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // read data from json file
+    readJson();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    List<Widget> subjects = [];
-
-    subjects.add(CustomSubjectCard(true, "item1"));
-
-    for(int i = 2; i < 7; i++) {
-      subjects.add(CustomSubjectCard(false, "item$i"));
-    }
-
-    List<Widget> teachers = [];
-    for(int i = 1; i <= 20; i++) {
-      teachers.add(CustomTeacherCard("Teacher$i", "Starting Date"));
-    }
-
     return MaterialApp(
       home: Scaffold(
         // be aware of notches
@@ -43,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: primary_color,
+                      color: kPrimaryColor,
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
@@ -53,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       SizedBox(
-                        height: 90,
+                        height: 70,
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 25),
@@ -61,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Classes and Groups",
                           style: TextStyle(
                             fontSize: 30,
-                            color: secondary_color,
+                            color: kSecondaryColor,
                             fontWeight: FontWeight.bold
                           ),
                         ),
@@ -74,19 +81,37 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 4,
                 child: Container(
-                  color: body_color,
+                  color: kBodyColor,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 80,
-                        child: ListView(
+                      // subject horizontal list
+                      _items.isNotEmpty ? SizedBox(
+                        child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          children: subjects,
+                          itemCount: _items.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  clickedItem = index;
+                                  readJson();
+                                });
+                              },
+                              child: CustomSubjectCard(
+                                true,
+                                _items[index]["title"]
+                              ),
+                            );
+
+                          },
                         ),
-                      ),
+                        height: 80,
+                      )
+                      : Container(),
+
                       const Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 10),
+                        padding: EdgeInsets.only(left: 15, bottom: 10, top: 10),
                         child: Text(
                           "List Of Courses",
                           style: TextStyle(
@@ -94,12 +119,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView(
+
+
+                      // teacher vertical listview
+                      _teachers.isNotEmpty ? Expanded(
+                        child: ListView.builder(
                           scrollDirection: Axis.vertical,
-                          children: teachers,
+                          itemCount: _teachers.length,
+                          itemBuilder: (context, index) {
+                            return CustomTeacherCard(
+                              _teachers[index]["teacher_name"],
+                              _teachers[index]["starting_date"],
+                            );
+                          },
                         ),
-                      ),
+                      )
+                      : Container(),
                     ],
                   ),
                 ),
