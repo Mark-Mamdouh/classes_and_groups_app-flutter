@@ -9,6 +9,8 @@ import '../resources/custom_teacher_card.dart';
 
 
 class MyApp extends StatelessWidget{
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp( //use MaterialApp() widget like this
@@ -52,7 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     SizeConfig().init(context);
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return MaterialApp(
       home: Scaffold(
         // be aware of notches
@@ -75,14 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: SizeConfig.safeBlockVertical * 10,
+                        height: isPortrait ? SizeConfig.safeBlockVertical * 10 : SizeConfig.safeBlockVertical * 6,
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 10),
                         child: Text(
                           "Classes and Groups",
                           style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5,
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
                             color: kSecondaryColor,
                             fontWeight: FontWeight.bold
                           ),
@@ -115,14 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 });
                               },
                               child: CustomSubjectCard(
-                                true,
+                                clickedItem == index ? true : false,
                                 _items[index]["title"]
                               ),
                             );
 
                           },
                         ),
-                        height: SizeConfig.safeBlockVertical * 6,
+                        height: isPortrait ? SizeConfig.safeBlockVertical * 6 : SizeConfig.safeBlockVertical * 12,
                       )
                       : Container(),
 
