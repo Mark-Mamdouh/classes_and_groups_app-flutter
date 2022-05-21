@@ -32,6 +32,7 @@ class CustomTeacherCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // teacher name text
                 Text(
                   teacherName,
                   style: TextStyle(
@@ -39,9 +40,11 @@ class CustomTeacherCard extends StatelessWidget {
                     fontSize: SizeConfig.safeBlockHorizontal * 4,
                   ),
                 ),
-                // SizedBox(
-                //   height: SizeConfig.safeBlockVertical * 2,
-                // ),
+                // some vertical space
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 2,
+                ),
+                // date text
                 Text(
                   startingDate,
                   style: const TextStyle(

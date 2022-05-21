@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:classes_and_groups_app/utilities/constants.dart';
 import 'package:classes_and_groups_app/utilities/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../utilities/api.dart';
 import '../widgets/custom_subject_card.dart';
 import '../widgets/custom_teacher_card.dart';
 
@@ -19,23 +19,27 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
   List _items = [];
   List _teachers = [];
   int clickedItem = 0;
+  API api = API();
+  late var data;
 
-  // Fetch content from the json file
-  Future<void> readJson() async {
-    final String response = await rootBundle.loadString('data.json');
-    // print(response);
-    final data = await json.decode(response);
+  void updateData(var data) {
     setState(() {
       _items = data["subjects"];
       _teachers = _items[clickedItem]['courses'];
     });
   }
 
+  void getData() async {
+    String response = await api.readFakeApiJson();
+    data = await json.decode(response);
+    updateData(data);
+  }
+
   @override
   void initState() {
     super.initState();
     // read data from json file
-    readJson();
+    getData();
   }
 
   @override
@@ -108,7 +112,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
                                   // update clicked item
                                   clickedItem = index;
                                   // update teachers list according to clicked subject
-                                  readJson();
+                                  updateData(data);
                                 });
                               },
                               child: CustomSubjectCard(

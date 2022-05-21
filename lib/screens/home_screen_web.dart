@@ -1,12 +1,10 @@
 import 'dart:convert';
+import 'package:classes_and_groups_app/utilities/api.dart';
 import 'package:classes_and_groups_app/utilities/constants.dart';
 import 'package:classes_and_groups_app/utilities/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../widgets/custom_subject_card.dart';
 import '../widgets/custom_teacher_card.dart';
-import 'package:http/http.dart' as http;
-
 
 class HomeScreenWeb extends StatefulWidget {
   const HomeScreenWeb({Key? key}) : super(key: key);
@@ -20,35 +18,28 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   List _items = [];
   List _teachers = [];
   int clickedItem = 0;
+  API api = API();
+  late var data;
 
-  // Fetch content from the json file
-  Future<void> readLocalJson() async {
-    final String response = await rootBundle.loadString('data.json');
-    // print(response);
-    final data = await json.decode(response);
+  // update lists based on clicked subject
+  void updateData(var data) {
     setState(() {
       _items = data["subjects"];
       _teachers = _items[clickedItem]['courses'];
     });
   }
 
-  // Fetch content from fake api
-  Future<void> readFakeApiJson() async {
-    final response = await http.get(Uri.parse("${(apiUrl)}$token"));
-    print(response);
-    // print(response);
-    final data = await json.decode(response.body);
-    setState(() {
-      _items = data["subjects"];
-      _teachers = _items[clickedItem]['courses'];
-    });
+  // get data from api response
+  void getData() async {
+    String response = await api.readFakeApiJson();
+    data = await json.decode(response);
+    updateData(data);
   }
 
   @override
   void initState() {
     super.initState();
-    // read data from json file
-    readFakeApiJson();
+    getData();
   }
 
   @override
@@ -79,11 +70,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     // vertical space
                     children: [
+                      // some vertical space
                       SizedBox(
                         height: SizeConfig.safeBlockVertical * 6,
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 10),
+                        // title text
                         child: Text(
                           "Classes and Groups",
                           style: TextStyle(
@@ -115,11 +108,11 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  setState(() {
+                                  setState(() async {
                                     // update clicked item
                                     clickedItem = index;
                                     // update teachers list according to clicked subject
-                                    readFakeApiJson();
+                                    updateData(data);
                                   });
                                 },
                                 child: Padding(
@@ -151,7 +144,6 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                             // teacher vertical listview
                             Expanded(
                               child: _teachers.isNotEmpty ? ListView.builder(
-
                                 itemCount: _teachers.length,
                                 itemBuilder: (context, index) {
                                   return CustomTeacherCard(
