@@ -31,7 +31,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
 
   // get data from api response
   void getData() async {
-    String response = await api.readFakeApiJson();
+    String response = await api.readApiJson();
     data = await json.decode(response);
     updateData(data);
   }

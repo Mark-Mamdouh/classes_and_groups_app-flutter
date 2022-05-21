@@ -11,10 +11,9 @@ class API {
   }
 
   // Fetch content from fake api
-  Future<String> readFakeApiJson() async {
+  Future<String> readApiJson() async {
     final response = await http.get(Uri.parse("${(apiUrl)}$token"));
     if(response.body.isEmpty) {
-      print("emptyyyyyyyyyyyyyyyyyyyyy");
       return readLocalJson();
     }
     return response.body;

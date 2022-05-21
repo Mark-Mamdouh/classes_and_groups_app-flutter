@@ -17,7 +17,7 @@ class CustomSubjectCard extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 2),
-      width: SizeConfig.safeBlockHorizontal * 24,
+      width: SizeConfig.safeBlockHorizontal * 27,
       height: SizeConfig.safeBlockVertical * 12,
       decoration: BoxDecoration(
         color: active ? kPrimaryColor : kSecondaryColor,
@@ -27,7 +27,7 @@ class CustomSubjectCard extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: SizeConfig.safeBlockHorizontal * 4,
+              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
               color: active ? Colors.white : Colors.black,
             ),
           )
