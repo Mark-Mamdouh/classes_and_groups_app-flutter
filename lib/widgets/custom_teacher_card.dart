@@ -36,9 +36,9 @@ class CustomTeacherCard extends StatelessWidget {
                     fontSize: SizeConfig.safeBlockHorizontal * 4,
                   ),
                 ),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical * 2,
-                ),
+                // SizedBox(
+                //   height: SizeConfig.safeBlockVertical * 2,
+                // ),
                 Text(
                   startingDate,
                   style: const TextStyle(

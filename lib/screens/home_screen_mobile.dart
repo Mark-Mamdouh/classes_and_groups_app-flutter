@@ -1,34 +1,20 @@
 import 'dart:convert';
 import 'package:classes_and_groups_app/utilities/constants.dart';
 import 'package:classes_and_groups_app/utilities/size_config.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../resources/custom_subject_card.dart';
-import '../resources/custom_teacher_card.dart';
+import '../widgets/custom_subject_card.dart';
+import '../widgets/custom_teacher_card.dart';
 
 
-class MyApp extends StatelessWidget{
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp( //use MaterialApp() widget like this
-        home: HomeScreen() //create new widget class for this 'home' to
-      // escape 'No MediaQuery widget found' error
-    );
-  }
-}
-
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreenMobile extends StatefulWidget {
+  const HomeScreenMobile({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenMobile> createState() => _HomeScreenMobileState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenMobileState extends State<HomeScreenMobile> {
 
   List _items = [];
   List _teachers = [];
