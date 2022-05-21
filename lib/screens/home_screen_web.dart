@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/custom_subject_card.dart';
 import '../widgets/custom_teacher_card.dart';
+import 'package:http/http.dart' as http;
 
 
 class HomeScreenWeb extends StatefulWidget {
@@ -21,10 +22,22 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   int clickedItem = 0;
 
   // Fetch content from the json file
-  Future<void> readJson() async {
+  Future<void> readLocalJson() async {
     final String response = await rootBundle.loadString('data.json');
     // print(response);
     final data = await json.decode(response);
+    setState(() {
+      _items = data["subjects"];
+      _teachers = _items[clickedItem]['courses'];
+    });
+  }
+
+  // Fetch content from fake api
+  Future<void> readFakeApiJson() async {
+    final response = await http.get(Uri.parse("${(apiUrl)}$token"));
+    print(response);
+    // print(response);
+    final data = await json.decode(response.body);
     setState(() {
       _items = data["subjects"];
       _teachers = _items[clickedItem]['courses'];
@@ -35,12 +48,13 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
   void initState() {
     super.initState();
     // read data from json file
-    readJson();
+    readFakeApiJson();
   }
 
   @override
   Widget build(BuildContext context) {
 
+    // initialize media query object
     SizeConfig().init(context);
 
     return MaterialApp(
@@ -63,6 +77,7 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    // vertical space
                     children: [
                       SizedBox(
                         height: SizeConfig.safeBlockVertical * 6,
@@ -101,8 +116,10 @@ class _HomeScreenWebState extends State<HomeScreenWeb> {
                               return GestureDetector(
                                 onTap: () {
                                   setState(() {
+                                    // update clicked item
                                     clickedItem = index;
-                                    readJson();
+                                    // update teachers list according to clicked subject
+                                    readFakeApiJson();
                                   });
                                 },
                                 child: Padding(

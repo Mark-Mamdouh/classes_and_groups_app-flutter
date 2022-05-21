@@ -41,7 +41,10 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
   @override
   Widget build(BuildContext context) {
 
+    // initialize media query object
     SizeConfig().init(context);
+
+    // check is portrait or landscape
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return MaterialApp(
@@ -65,6 +68,7 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // vertical space
                       SizedBox(
                         height: isPortrait ? SizeConfig.safeBlockVertical * 10 : SizeConfig.safeBlockVertical * 6,
                       ),
@@ -101,7 +105,9 @@ class _HomeScreenMobileState extends State<HomeScreenMobile> {
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
+                                  // update clicked item
                                   clickedItem = index;
+                                  // update teachers list according to clicked subject
                                   readJson();
                                 });
                               },

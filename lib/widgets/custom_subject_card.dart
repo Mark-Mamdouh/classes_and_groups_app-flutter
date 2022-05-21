@@ -11,7 +11,10 @@ class CustomSubjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // initialize media query
     SizeConfig().init(context);
+
     return Container(
       margin: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 2),
       width: SizeConfig.safeBlockHorizontal * 24,

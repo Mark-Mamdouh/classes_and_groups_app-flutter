@@ -11,7 +11,10 @@ class CustomTeacherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // initialize media query
     SizeConfig().init(context);
+
     return Container(
       margin: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 1.5),
       color: kSecondaryColor,
@@ -20,7 +23,7 @@ class CustomTeacherCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 5),
               child: Image(
-                image: AssetImage("images/teacher.png"),
+                image: const AssetImage("images/teacher.png"),
                 width: SizeConfig.safeBlockHorizontal * 8,
                 height: SizeConfig.safeBlockVertical * 8,
               ),
